@@ -16,3 +16,4 @@ db_password = "12345qwerty"
 # later in this doc.   
 [my_cool_secrets]
 things_i_like = ["Streamlit", "Python"]
+['message']
