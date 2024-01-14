@@ -1,38 +1,30 @@
 import streamlit as st
-import numpy as np
-import pandas as pd
-from time import time
+import requests
 
-st.title('st.cache')
+st.title('🏀 Bored API app')
 
-# Using cache
-a0 = time()
-st.subheader('Using st.cache')
+st.sidebar.header('Input')
+selected_type = st.sidebar.selectbox('Select an activity type', ["education", "recreational", "social", "diy", "charity", "cooking", "relaxation", "music", "busywork"])
 
-@st.cache(suppress_st_warning=True)
-def load_data_a():
-  df = pd.DataFrame(
-    np.random.rand(2000000, 5),
-    columns=['a', 'b', 'c', 'd', 'e']
-  )
-  return df
+suggested_activity_url = f'http://www.boredapi.com/api/activity?type={selected_type}'
+json_data = requests.get(suggested_activity_url)
+suggested_activity = json_data.json()
 
-st.write(load_data_a())
-a1 = time()
-st.info(a1-a0)
+c1, c2 = st.columns(2)
+with c1:
+  with st.expander('About this app'):
+    st.write('Are you bored? The **Bored API app** provides suggestions on activities that you can do when you are bored. This app is powered by the Bored API.')
+with c2:
+  with st.expander('JSON data'):
+    st.write(suggested_activity)
+    
+st.header('Suggested activity')
+st.info(suggested_activity['activity'])
 
-
-# Not using cache
-b0 = time()
-st.subheader('Not using st.cache')
-
-def load_data_b():
-  df = pd.DataFrame(
-    np.random.rand(2000000, 5),
-    columns=['a', 'b', 'c', 'd', 'e']
-  )
-  return df
-
-st.write(load_data_b())
-b1 = time()
-st.info(b1-b0)
+col1, col2, col3 = st.columns(3)
+with col1:
+  st.metric(label='Number of Participants', value=suggested_activity['participants'], delta='')
+with col2:
+  st.metric(label='Type of Activity', value=suggested_activity['type'].capitalize(), delta='')
+with col3:
+  st.metric(label='Price', value=suggested_activity['price'], delta='')
