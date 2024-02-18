@@ -22,9 +22,9 @@ with col3:
   a = st.number_input('What are you dividing')
   b = st.number_input('From')
   c = st.number_input('From ')
-  d = (a / b)
-  st.write(d)
-  st.write(d/c)
+  #d = (a / b)
+  #st.write(d)
+  #st.write(d/c)
 
 with col4:
   st.header(""" Multiplication  """)
@@ -44,3 +44,4 @@ st.write('tan',tan(g))
 st.write('sinh',sinh(g))
 st.write('cosh',cosh(g))
 st.write('tanh',tanh(g))
+
